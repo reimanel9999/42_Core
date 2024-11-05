@@ -27,7 +27,7 @@ $(NAME): $(OBJS)
 clean:
 	rm -f $(OBJS) *~ .*.swp
 fclean: clean
-	rm -f $(NAME) .*.un~
+	rm -f $(NAME) .*.un
 
 re: fclean all
 
