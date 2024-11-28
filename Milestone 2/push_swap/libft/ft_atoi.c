@@ -6,41 +6,39 @@
 /*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:36:09 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/11/18 18:40:03 by mcarvalh         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:06:09 by mcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include "libft.h"
 
-int	ft_atoi(const char *str, int *i, int *number)
+int	ft_atoi(const char *str, int *index)
 {
 	int		sign;
-	long	temp_num;
+	long	result;
 
 	sign = 1;
-	temp_num = 0;
-	while (str[*i] && (str[*i] == ' ' || (str[*i] >= 9 && str[*i] <= 13)))
-		(*i)++;
-	if (str[*i] == '+' || str[*i] == '-')
-		if (str[*i] == '-') {
+	result = 0;
+	while (str[*index] && (str[*index] == ' ' || (str[*index] >= 9 && str[*index] <= 13)))
+		(*index)++;
+	if (str[*index] == '+' || str[*index] == '-') {
+		if (str[*index] == '-')
 			sign *= -1;
-			(*i)++;
-		}
-	// if (str[*i] < '0' && str[*i] > '9')
-	// 	return (1);
-	while (str[*i] >= '0' && str[*i] <= '9')
-	{
-		temp_num = temp_num * 10 + sign * (str[*i] - '0');
-		if (temp_num > INT_MAX || temp_num < INT_MIN)
-			return (1);
-		(*i)++;
+		(*index)++;
 	}
-	// Skip spaces between temp_nums
-	while (str[*i] && str[*i] == ' ')
-		(*i)++;
-	if (str[*i] != '\0')
-		return (1);
-	*number = (int)(temp_num * sign);
-	return (0);
+	// if (str[*index] < '0' && str[*index] > '9')
+	// 	return (1);
+	while (str[*index] >= '0' && str[*index] <= '9') {
+		result = result * 10 + (str[*index] - '0');
+		if (sign * result > INT_MAX || sign * result < INT_MIN)
+			return (1);
+		(*index)++;
+	}
+	// Skip spaces between results
+	while (str[*index] && str[*index] == ' ')
+		(*index)++;
+	// if (*index == *index || (str[*index] < '0' || str[*index] > '9'))
+    //     return 1;
+	return ((int)(result * sign));
 }

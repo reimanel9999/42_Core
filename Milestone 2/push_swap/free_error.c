@@ -6,7 +6,7 @@
 /*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:34:58 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/11/18 18:12:04 by mcarvalh         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:06:06 by mcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	free_stack(node_t **root) {
 	}
 }
 
-int duplicates(node_t** root, int value) {
-	node_t* curr;
+// int duplicates(node_t** root, int value) {
+// 	node_t* curr;
 
-	curr = *root;
-	while (curr != NULL) {
-		if (curr->x == value)
-			return 1;
-		curr = curr->next;
-	}
-	return (0);
-}
+// 	curr = *root;
+// 	while (curr != NULL) {
+// 		if (curr->x == value)
+// 			return 1;
+// 		curr = curr->next;
+// 	}
+// 	return (0);
+// }

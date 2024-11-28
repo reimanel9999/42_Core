@@ -6,7 +6,7 @@
 /*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:02:59 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/11/18 18:03:38 by mcarvalh         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:23:10 by mcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct node {
 
 //Nodes/stack start
 
-int		start_stack(char* str, node_t** root);
-int		insert_end(node_t** root, int value);
+void	start_stack(char* str, node_t** root);
+void	insert_end(node_t** root, int value);
 
 // stack utils
 
@@ -55,7 +55,7 @@ void	rrb(node_t** root);
 // Handle errors/frees
 
 void	free_stack(node_t **root);
-int 	duplicates(node_t** root, int value);
+// int 	duplicates(node_t** root, int value);
 
 // libft
 
@@ -79,7 +79,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
-int		ft_atoi(const char *str, int *i, int *number);
+int		ft_atoi(const char *str, int *i);
 void	*ft_calloc(size_t num, size_t size);
 char	*ft_strdup(char *str);
 char	*ft_strjoin(char const *s1, char const *s2);

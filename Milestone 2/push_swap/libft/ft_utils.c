@@ -6,7 +6,7 @@
 /*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:00:43 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/11/14 14:26:46 by mcarvalh         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:03:12 by mcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ int	ft_putnbr_u(unsigned int nb)
 	int	printed_chars;
 
 	printed_chars = 0;
-	if (nb < 0)
-		printed_chars += ft_putnbr(-nb);
-	else if (nb >= 10)
+	if (nb >= 10)
 	{
 		printed_chars += ft_putnbr(nb / 10);
 		printed_chars += ft_putchr(nb % 10 + '0');

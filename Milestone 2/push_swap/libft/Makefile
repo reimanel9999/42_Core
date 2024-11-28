@@ -6,7 +6,7 @@
 #    By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/23 16:53:43 by mcarvalh          #+#    #+#              #
-#    Updated: 2024/11/14 14:30:52 by mcarvalh         ###   ########.fr        #
+#    Updated: 2024/11/20 15:55:49 by mcarvalh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ $(NAME): $(OBJS)
 	ar rcs $@ $^
 
 %.o: %.c
-	cc $(CFLAGS) -c $< -o $@ -Ilibft.h
+	cc $(CFLAGS) -c $< -o $@ -I./libft
 
 clean:
 	rm -f $(OBJS) *~ .*.swp

@@ -6,7 +6,7 @@
 /*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:41:24 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/11/18 15:27:35 by mcarvalh         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:06:10 by mcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	len_stack(node_t* root) {
 
 	m = 0;
 	temp = root;
-	while (root != NULL) {
+	while (temp != NULL) {
 		m++;
-		root = root->next;
+		temp = temp->next;
 	}
 	return (m);
 }
@@ -53,7 +53,7 @@ void	sort_three(node_t** root) {
 		rra(root);
 	}
 	else if(first < second && first > third)
-		ra(root);
+		rra(root);
 	else if (first < second && first < third) {
 		rra(root);
 		sa(root);

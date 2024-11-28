@@ -6,15 +6,15 @@
 #    By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 15:38:39 by mcarvalh          #+#    #+#              #
-#    Updated: 2024/11/18 18:10:36 by mcarvalh         ###   ########.fr        #
+#    Updated: 2024/11/26 16:18:53 by mcarvalh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Name of the final executable
 NAME = push_swap
-CC = cc
+CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
-SRC = main.c nodes_init.c stack_utils.c swaps.c rotates.c free_error.c
+SRC = push_swap.c nodes_init.c stack_utils.c swaps.c rotates.c free_error.c
 OBJ = $(SRC:.c=.o)
 
 # Libft configuration
