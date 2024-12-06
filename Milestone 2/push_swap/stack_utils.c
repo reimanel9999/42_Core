@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 12:41:24 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/11/20 17:06:10 by mcarvalh         ###   ########.fr       */
+/*   Created: 2024/11/13 18:02:50 by mcarvalh          #+#    #+#             */
+/*   Updated: 2024/12/06 16:07:07 by mcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,72 @@ bool	sort_stack(node_t* root) {
 	return (true);
 }
 
-int	len_stack(node_t* root) {
-	int	m;
-	node_t* temp;
+void	start_stack(char* str, node_t** root) {
+	int	index;
+	int num;
 
-	m = 0;
-	temp = root;
-	while (temp != NULL) {
-		m++;
-		temp = temp->next;
+	index = 0;
+	num = 0;
+	while (str[index]) {
+		num = ft_atoi(str, &index);
+		insert_end(root, num);
 	}
-	return (m);
 }
 
-void	sort_three(node_t** root) {
-	int	first;
-	int	second;
-	int	third;
+void	insert_end(node_t** root, int value) {
+	node_t* new_node;
 
-	first = (*root)->x;
-	second = (*root)->next->x;
-	third = (*root)->next->next->x;
-	if (first > second && first < third)
-		sa(root);
-	else if (first > second && (second < third && first > third))
-		ra(root);
-	else if (first > second && second > third) {
-		sa(root);
-		rra(root);
+	new_node = (node_t *)malloc(sizeof(node_t));
+	if (new_node == NULL)
+		return ;
+	new_node->x = value;
+	new_node->next = NULL;
+	// Initialize root if list is empty
+	if (*root == NULL) {
+		*root = new_node; 
+		return ;
 	}
-	else if(first < second && first > third)
-		rra(root);
-	else if (first < second && first < third) {
-		rra(root);
-		sa(root);
+	node_t*	curr;
+	
+	curr = *root;
+	while(curr->next != NULL) {
+		curr = curr->next;
 	}
+	curr->next = new_node;
+}
+
+void assign_indices(node_t **root) {
+	node_t *curr;
+	int *arr;
+	int m;
+	int	stack_len;
+	
+	stack_len = len_stack(*root);
+	curr = *root;
+	arr  = malloc(sizeof(int) * stack_len);
+	m = 0;
+	while (curr != NULL) {
+		arr[m] = curr->x;
+		curr = curr->next;
+		m++;
+	}
+
+	ft_qsort(arr, stack_len, sizeof(int), compare); // Sorting numbers
+	
+	// Assigning indices based on sorted order
+	curr = *root;
+	m = 0;
+	while (curr != NULL) {
+		while (m < stack_len) {
+			if (curr->x == arr[m]) {
+				curr->index = m;
+				m = 0;
+				break;
+			}
+			m++;
+		}
+		curr = curr->next;
+	}
+
+	free(arr);
 }
