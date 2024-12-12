@@ -6,7 +6,7 @@
 #    By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 15:38:39 by mcarvalh          #+#    #+#              #
-#    Updated: 2024/12/04 10:46:13 by mcarvalh         ###   ########.fr        #
+#    Updated: 2024/12/12 20:55:56 by mcarvalh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME = push_swap
 CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
-SRC = push_swap.c sorting.c stack_utils.c swaps.c rotates.c free_error.c ft_qsort.c sort_utils.c
+SRC = push_swap.c sort_big.c sort_small.c stack_utils.c swaps.c rotates.c free_error.c ft_qsort.c sort_utils.c find.c rot_command.c
 OBJ = $(SRC:.c=.o)
 
 # Libft configuration

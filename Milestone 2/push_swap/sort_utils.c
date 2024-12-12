@@ -6,56 +6,60 @@
 /*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:00:56 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/12/05 16:57:04 by mcarvalh         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:37:31 by mcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	calculate_chunk_size(int total) {
-	if (total <= 10)
-		return (total);
-	
-	int	size;
-	size = 0;
-	while (total * size > size * size) {
-		if (total <= size * size)
-			return (size);
-		size++;
+int	calculate_chunk_size(int len)
+{
+	if (len <= 20)
+		return (2);
+	return (len / 5);
+}
+
+int	in_range(node_t *stack, int start, int end)
+{
+	node_t	*curr;
+
+	curr = stack;
+	while (curr)
+	{
+		if (curr->index >= start && curr->index < end)
+			return (1);
+		curr = curr->next;
 	}
-	if (size < 10)
-		return (10);
-	if (size > total / 2)
-		size = total / 2;
-	return (size);
+	return (0);
 }
 
-int has_elements_in_range(node_t *stack, int start, int end) {
-	while (stack) {
-        if (stack->index >= start && stack->index < end)
-            return 1;
-        stack = stack->next;
-    }
-    return 0;
+int	find_closest_index_position(node_t *stack, int start, int end)
+{
+	int	len;
+
+	len = len_stack(stack);
+	return (find_closest_position(stack, start, end, len));
 }
 
-int find_closest_index_position(node_t *stack, int start, int end) {
-	int position = 0;
-	int closest_position = -1;
-	int closest_distance = INT_MAX;
-	int len = len_stack(stack);
+int	find_closest_position(node_t *stack, int start, int end, int len)
+{
+	int		position;
+	int		closest_position;
+	int		closest_distance;
+	node_t	*curr;
+	int		distance;
 
-	node_t *curr = stack;
-	while (curr) {
-		if (curr->index >= start && curr->index < end) {
-			int distance;
-			if (position <= (len / 2)) {
-				distance = position;
-			} else {
-				distance = len - position;
-			}
-
-			if (distance < closest_distance) {
+	position = 0;
+	closest_position = -1;
+	closest_distance = INT_MAX;
+	curr = stack;
+	while (curr)
+	{
+		if (curr->index >= start && curr->index < end)
+		{
+			distance = calculate_distance(position, len);
+			if (distance < closest_distance)
+			{
 				closest_distance = distance;
 				closest_position = position;
 			}
@@ -63,49 +67,70 @@ int find_closest_index_position(node_t *stack, int start, int end) {
 		curr = curr->next;
 		position++;
 	}
-
-	return closest_position;
+	return (closest_position);
 }
 
-int find_max_index_position(node_t *stack_b) {
-    int position = 0;
-    int max_position = 0;
-    int max_index = INT_MIN;
-
-    node_t *current = stack_b;
-    while (current) {
-        if (current->index > max_index) {
-            max_index = current->index;
-            max_position = position;
-        }
-        current = current->next;
-        position++;
-    }
-    return max_position;
+int	calculate_distance(int position, int len)
+{
+	if (position <= (len / 2))
+		return (position);
+	return (len - position);
 }
 
-int find_max_index(node_t *stack) {
-    int max_index = stack->index;
-    node_t *curr = stack;
+void	move_min_or_max_to_top(node_t **stack_b)
+{
+	int	min_position;
+	int	max_position;
+	int	stack_len;
+	int	optimal_position;
 
-    while (curr) {
-        if (curr->index > max_index) {
-            max_index = curr->index;
-        }
-        curr = curr->next;
-    }
-    return max_index;
+	min_position = find_from_top(*stack_b, min(*stack_b), max(*stack_b));
+	max_position = find_from_bottom(*stack_b, min(*stack_b), max(*stack_b));
+	stack_len = len_stack(*stack_b);
+	if (min_position < stack_len - max_position)
+		optimal_position = min_position;
+	else
+		optimal_position = max_position;
+	if (optimal_position == min_position)
+	{
+		while (optimal_position--)
+			rb(stack_b);
+	}
+	else 
+	{
+		while (optimal_position++ < stack_len)
+			rrb(stack_b);
+	}
 }
 
-int find_position(node_t *stack, int target_index) {
-    int position;
-    node_t *curr;
-    
+void	put_in_position(node_t **stack_a, node_t **stack_b)
+{
+	int	top_b;
+	int	closest;
+	int	stack_len_a;
+
+	top_b = (*stack_b)->index;
+	closest = closest_above(*stack_a, top_b);
+	stack_len_a = len_stack(*stack_a);
+	if (closest == INT_MAX && stack_len_a > 0)
+		closest = min(*stack_a);
+	rotate_target(stack_a, closest);
+	pa(stack_a, stack_b);
+}
+
+int	find_position(node_t *stack, int target_index)
+{
+	int		position;
+	node_t	*curr;
+
 	position = 0;
 	curr = stack;
-	while (curr && curr->index != target_index) {
-        position++;
-        curr = curr->next;
-    }
-    return position;
+	while (curr)
+	{
+		if (curr->index == target_index)
+			return (position);
+		position++;
+		curr = curr->next;
+	}
+	return (-1);
 }

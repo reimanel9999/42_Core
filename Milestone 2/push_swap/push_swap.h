@@ -6,7 +6,7 @@
 /*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:02:59 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/12/06 16:02:08 by mcarvalh         ###   ########.fr       */
+/*   Updated: 2024/12/12 21:43:32 by mcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,56 +33,87 @@ typedef struct node {
 	struct node* next;
 } node_t;
 
+void	process(node_t **stack_a, node_t **stack_b);
+
 // stack utils
 
-bool	sort_stack(node_t* root);
-void	start_stack(char* str, node_t** root);
+int		len_stack(node_t* root);
+void	start_stack(char* str, node_t** root, int *error);
 void	insert_end(node_t** root, int value);
 void	assign_indices(node_t **root);
+bool	sort_stack(node_t* root);
+void	indices(node_t **root, int *arr, int len);
+int		max(node_t *stack);
+int		min(node_t *stack);
 
-// sorting
+// sort_small
 
-int		len_stack(node_t* root);
+void	sort_two(node_t **root);
 void	sort_three(node_t** root);
-// void	chunk_partition(node_t **stack_a, node_t **stack_b);
-void insert_into_stack_b_sorted(node_t **stack_a, node_t **stack_b);
-void sort_stack_a(node_t **stack_a, node_t **stack_b);
+void	sort_five(node_t **stack_a, node_t **stack_b);
+void	small_sort_b(node_t **stack_a, node_t **stack_b);
+int		find_nextbig_index_position(node_t *stack_a, int index);
+int		find_sm_idx(node_t *a);
+int		find_sm2_idx(node_t *stack);
+int		find_index_position(node_t *a, int index);
 
-void chunk_partition(node_t **stack_a, node_t **stack_b);
-void sort_and_merge(node_t **stack_a, node_t **stack_b);
-void merge_back_to_a(node_t **stack_a, node_t **stack_b);
-void sort_stack_b(node_t **stack_b, node_t **stack_a);
-void push_swap(node_t **stack_a);
+// sort_big
 
-void insertion_sort(node_t **stack_a, node_t **stack_b);
+void	sort_big(node_t **stack_a, node_t **stack_b);
+void	sorted_to_stack_a(node_t **stack_a, node_t **stack_b);
+void	chunk_move(node_t **stack_a, node_t **stack_b, int start, int end);
 
-void quick_sort_chunks(node_t **stack_a, node_t **stack_b, int start, int end);
-int get_pivot(node_t *stack, int start, int end);
-void partition_stack(node_t *stack_a, node_t *stack_b, int start, int end, int pivot);
-
+int		calculate_rotations(node_t *stack, int target_index);
+void	rotate_position(node_t **stack, int target_index);
 
 // sort_utils
 
-int	calculate_chunk_size(int total);
-int	has_elements_in_range(node_t *stack, int start, int end);
-int	find_closest_index_position(node_t *stack, int start, int end);
-int	find_max_index(node_t *stack);
-int	find_position(node_t *stack, int target_index);
+int		calculate_chunk_size(int total);
+int		in_range(node_t *stack, int start, int end);
+int		find_closest_index_position(node_t *stack, int start, int end);
+int		find_position(node_t *stack, int target_index);
+int		calculate_distance(int position, int len);
+int		find_closest_position(node_t *stack, int start, int end, int len);
 
-int find_max_index_position(node_t *stack_b);
+void	move_min_or_max_to_top(node_t **stack_b);
+void	put_in_position(node_t **stack_a, node_t **stack_b);
+int		closest_above(node_t *stack, int target_index);
+
+// Finding indexes
+
+int		find_from_bottom(node_t *stack, int start, int end);
+int		find_from_top(node_t *stack, int start, int end);
+int		find_top_target(node_t *stack, int target);
+int		find_bottom_target(node_t *stack, int target);
 
 // Handle errors/frees
 
 void	free_stack(node_t **root);
-void	check_duplicates(node_t *root);
+int		check_duplicates(node_t *root);
+int		error_handler(int m);
 
 // ft_qsort
 
+typedef struct s_qsort
+{
+    void    *base;
+    size_t  size;
+    int     (*compar)(const void *, const void *);
+}   t_qsort;
+
 void	ft_qsort(void *base, size_t num, size_t size, int (*compar)(const void *, const void *));
-void	quicksort(void *base, size_t size, size_t low, size_t high, int (*compar)(const void *, const void *));
+void	quicksort(t_qsort *data, size_t low, size_t high);
 int		compare(const void *a, const void *b);
-size_t	partition(void *base, size_t size, size_t low, size_t high, int (*compar)(const void *, const void *));
+size_t	partition(t_qsort *data, size_t low, size_t high);
 void	ft_swap(void *a, void *b, size_t size);
+// rotates
+
+void	rotate_target(node_t **stack_a, int target_index);
+void	rotate_a(node_t **stack_a, int start, int end);
+int		cal_pos(int top_position, int bottom_position, int stack_len);
+void	perform_rotation(node_t **stack_a, int optimal_position, int stack_len, int top_position);
+
+
 
 // commands
 
@@ -118,7 +149,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
-int		ft_atoi(const char *str, int *i);
+int		ft_atoi(const char *str, int *i, int *error);
 void	*ft_calloc(size_t num, size_t size);
 char	*ft_strdup(char *str);
 char	*ft_strjoin(char const *s1, char const *s2);

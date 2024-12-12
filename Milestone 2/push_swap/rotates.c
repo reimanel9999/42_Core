@@ -6,69 +6,64 @@
 /*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:17:30 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/11/14 18:08:45 by mcarvalh         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:55:59 by mcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ra(node_t** root_a) {
-	node_t*	first;
-	node_t*	temp;
-	
-	first = *root_a;
-	temp = *root_a;
-	*root_a = (*root_a)->next;
-	while (temp->next != NULL)
-		temp = temp->next;
-	temp->next = first;
-	first->next = NULL;
-	ft_printf("ra\n");
+int	cal_pos(int top_pos, int bottom_pos, int stack_len)
+{
+	if (top_pos < stack_len - bottom_pos)
+		return (top_pos);
+	return (bottom_pos);
 }
 
-void	rb(node_t** root_b) {
-	node_t*	first;
-	node_t*	temp;
-	
-	first = *root_b;
-	temp = *root_b;
-	*root_b = (*root_b)->next;
-	while (temp->next != NULL)
-		temp = temp->next;
-	temp->next = first;
-	first->next = NULL;
-	ft_printf("rb\n");
-}
-
-void	rra(node_t** root_a) {
-	node_t*	second_last;
-	node_t*	temp;
-	
-	temp = *root_a;
-	second_last = NULL;
-	while (temp->next != NULL) {
-		second_last = temp;
-		temp = temp->next;
+void	perform_rotation(node_t **stack_a, int best_pos, \
+int stack_len, int top_pos)
+{
+	if (best_pos == top_pos)
+	{
+		while (best_pos > 0)
+		{
+			ra(stack_a);
+			best_pos--;
+		}
 	}
-	second_last->next = NULL;
-	temp->next = *root_a;
-	*root_a = temp;
-	ft_printf("rra\n");
-}
-
-void	rrb(node_t** root_b) {
-	node_t*	second_last;
-	node_t*	temp;
-	
-	temp = *root_b;
-	second_last = NULL;
-	while (temp->next != NULL) {
-		second_last = temp;
-		temp = temp->next;
+	else
+	{
+		while (best_pos < stack_len)
+		{
+			rra(stack_a);
+			best_pos++;
+		}
 	}
-	second_last->next = NULL;
-	temp->next = *root_b;
-	*root_b = temp;
-	ft_printf("rrb\n");
 }
 
+void	rotate_a(node_t **stack_a, int start, int end)
+{
+	int	top_pos;
+	int	bottom_pos;
+	int	stack_len;
+	int	best_pos;
+
+	top_pos = find_from_top(*stack_a, start, end);
+	bottom_pos = find_from_bottom(*stack_a, start, end);
+	stack_len = len_stack(*stack_a);
+	best_pos = cal_pos(top_pos, bottom_pos, stack_len);
+	perform_rotation(stack_a, best_pos, stack_len, top_pos);
+}
+
+void	rotate_target(node_t **stack_a, int target_index)
+{
+	int	top_pos;
+	int	bottom_pos;
+	int	stack_len;
+	int	best_pos;
+
+	top_pos = find_top_target(*stack_a, target_index);
+	bottom_pos = find_bottom_target(*stack_a, target_index);
+	stack_len = len_stack(*stack_a);
+	best_pos = cal_pos(top_pos, bottom_pos, stack_len);
+	perform_rotation(stack_a, best_pos, stack_len, top_pos);
+}
