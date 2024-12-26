@@ -6,37 +6,32 @@
 /*   By: manelcarvalho <manelcarvalho@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:36:09 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/12/26 19:52:52 by manelcarval      ###   ########.fr       */
+/*   Updated: 2024/12/26 19:53:50 by manelcarval      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include "libft.h"
 
-int	ft_atoi(const char *str, int *index, int *error)
+int	ft_atoi(const char *str)
 {
 	int		sign;
-	long	result;
+	long	number;
 
 	sign = 1;
-	result = 0;
-	while (str[*index] && (str[*index] == ' ' || \
-	(str[*index] >= 9 && str[*index] <= 13)))
-		(*index)++;
-	if (str[*index] == '+' || str[*index] == '-')
-	{
-		if (str[*index] == '-')
+	number = 0;
+	while (*str && (*str == ' ' || (*str >= 9 && *str <= 13)))
+		str++;
+	if (*str == '+' || *str == '-')
+		if (*(str++) == '-')
 			sign *= -1;
-		(*index)++;
-	}
-	while (str[*index] >= '0' && str[*index] <= '9')
+	while (*str >= '0' && *str <= '9')
 	{
-		result = result * 10 + (str[*index] - '0');
-		if (sign * result > INT_MAX || sign * result < INT_MIN)
-			*error = 1;
-		(*index)++;
+		number = number * 10 + sign * (*str++ - '0');
+		if (number > INT_MAX)
+			return (-1);
+		else if (number < INT_MIN)
+			return (0);
 	}
-	while (str[*index] && str[*index] == ' ')
-		(*index)++;
-	return ((int)(result * sign));
+	return ((int)number);
 }
