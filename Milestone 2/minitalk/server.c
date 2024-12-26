@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include <signal.h>
+#include <unistd.h>
+#include "libft/libft.h"
+#include <stdlib.h>
+#include <limits.h>
 
 void	signal_handler(int signal)
 {
