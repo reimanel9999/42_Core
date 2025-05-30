@@ -23,32 +23,13 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 size_t	ft_strlen(char *s)
 {
-	size_t ret = 0;
+	size_t len = 0;
 	while(*s)
 	{
 		s++;
-		ret++;
+		len++;
 	}
-	return (ret);
-}
-
-int	str_append_mem(char **s1, char *s2, size_t size2)
-{
-	size_t size1 = *s1 ? ft_strlen(*s1) : 0; // changed
-	char *tmp = malloc(size2 + size1 + 1);
-	if (!tmp)
-		return 0;
-	ft_memcpy(tmp, *s1, size1);
-	ft_memcpy(tmp + size1, s2, size2);
-	tmp[size1 + size2] = 0;
-	free(*s1);
-	*s1 = tmp;
-	return 1;
-}
-
-int	str_append_str(char **s1, char *s2)
-{
-	return str_append_mem(s1, s2, ft_strlen(s2));
+	return (len);
 }
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
@@ -63,34 +44,52 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return dest;
 }
 
+int	str_alloc(char **line, char *buffer, size_t size)
+{
+    size_t  linelen;
+    char    *temp;
+    linelen = 0;
+    if (*line)
+        linelen = ft_strlen(*line);
+    temp = malloc(linelen + size + 1);
+    if (!temp)
+        return (0);
+    ft_memcpy(temp, *line, linelen);
+    ft_memcpy(temp + linelen, buffer, size);
+    temp[linelen + size] = '\0';
+    free(*line);
+    *line = temp;
+    return (1);
+}
+
 char	*get_next_line(int fd)
 {
-	static char b[BUFFER_SIZE + 1] = "";
-	char *ret = NULL;
-	char *tmp = ft_strchr(b, '\n');
+	static char buf[BUFFER_SIZE + 1] = "";
+	char *line = NULL;
+	char *tmp = ft_strchr(buf, '\n');
 	while (!tmp) {
-		if (!str_append_str(&ret, b))
+		if (!str_alloc(&line, buf, BUFFER_SIZE))
 			return NULL;
-		int read_ret = read(fd, b, BUFFER_SIZE);
-		if (read_ret == -1)
+		int m = read(fd, buf, BUFFER_SIZE);
+		if (m == -1)
 		{
-			free(ret);
+			free(line);
 			return NULL;
 		}
-		b[read_ret] = 0;
-		if (read_ret == 0)
+		buf[m] = 0;
+		if (m == 0)
 		{
-			if (ret && *ret) return ret;
-			free(ret);
+			if (line && *line) return line;
+			free(line);
 			return NULL;
 		}
 	}
-	tmp = ft_strchr(b, '\n');
-	if (!str_append_mem(&ret, b, tmp - b + 1))
+	tmp = ft_strchr(buf, '\n');
+	if (!str_alloc(&line, buf, tmp - buf + 1))
 	{
-		free(ret);
+		free(line);
 		return NULL;
 	}
-	ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);
-	return ret;
+	ft_memmove(buf, tmp + 1, ft_strlen(tmp + 1) + 1);
+	return line;
 }
