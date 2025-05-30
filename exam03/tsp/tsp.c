@@ -68,3 +68,13 @@ int main()
 	fprintf(stdout, "%.2f\n", minDist);
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+
