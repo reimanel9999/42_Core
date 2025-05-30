@@ -93,3 +93,21 @@ char	*get_next_line(int fd)
 	ft_memmove(buf, tmp + 1, ft_strlen(tmp + 1) + 1);
 	return line;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
