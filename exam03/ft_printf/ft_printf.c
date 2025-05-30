@@ -50,6 +50,18 @@ int	ft_printf(const char *str, ...)
 	va_end(ptr);
 	return (len);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 int main()
 {
 	ft_printf("%s\n", "toto");
