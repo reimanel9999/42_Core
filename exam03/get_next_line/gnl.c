@@ -78,19 +78,19 @@ char	*get_next_line(int fd)
 			return NULL;
 		}
 		b[read_ret] = 0;
-		if (read_ret == 0) // added
+		if (read_ret == 0)
 		{
 			if (ret && *ret) return ret;
 			free(ret);
 			return NULL;
 		}
 	}
-	tmp = ft_strchr(b, '\n'); // added
+	tmp = ft_strchr(b, '\n');
 	if (!str_append_mem(&ret, b, tmp - b + 1))
 	{
 		free(ret);
 		return NULL;
 	}
-	ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1); // added
+	ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);
 	return ret;
 }
