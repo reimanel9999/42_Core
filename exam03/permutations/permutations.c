@@ -61,3 +61,11 @@ int main(int argc, char **argv)
 	while (next_permuta(str, m));
     return (0);
 }
+
+
+
+
+
+
+
+
