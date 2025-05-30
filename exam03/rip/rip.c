@@ -99,3 +99,12 @@ int main(int argc, char **argv)
 	rip(argv[1], 0, len, balance);
 	return (0);
 }
+
+
+
+
+
+
+
+
+
