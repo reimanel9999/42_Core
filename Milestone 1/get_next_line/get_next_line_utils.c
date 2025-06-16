@@ -3,77 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manelcarvalho <manelcarvalho@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 11:36:35 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/07/15 14:55:26 by mcarvalh         ###   ########.fr       */
+/*   Created: 2025/02/20 22:36:24 by manelcarval       #+#    #+#             */
+/*   Updated: 2025/06/16 11:21:25 by manelcarval      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_line(char *buffer, char *line, int fd, int *len)
+char	*ft_strchr(const char *str, int c)
 {
-	int	bytes_read;
+	int		i;
+	char	temp;
 
-	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
+	temp = (char) c;
+	i = 0;
+	while (str[i] != '\0')
 	{
-		buffer[bytes_read] = '\0';
-		line = alloc(buffer, *len + BUFFER_SIZE + 1);
-		if (!line)
-			return (NULL);
-		line = concat_buf(buffer, line, len);
-		if (line && line[*len - 1] == '\n' )
-			return (line);
+		if (str[i] == temp)
+			return ((char *)&str[i]);
+		i++;
 	}
-	if (bytes_read == 0 && *len > 0)
-		return (line);
-	free(line);
+	if (str[i] == temp)
+		return ((char *)&str[i]);
 	return (NULL);
 }
 
-char	*concat_buf(char *buffer, char *line, int *len)
+size_t	ft_strlen(const char *str)
 {
-	int	m;
+	size_t	len;
 
-	m = 0;
-	while (buffer[m] != '\0')
-	{
-		line[*len] = buffer[m];
-		(*len)++;
-		if (buffer[m] == '\n')
-		{
-			line[*len] = '\0';
-			ft_memmove(buffer, buffer + m + 1, BUFFER_SIZE - m);
-			return (line);
-		}
-		m++;
-	}
-	buffer[0] = '\0';
-	line[*len] = '\0';
-	return (line);
+	len = 0;
+	while (str [len] != '\0')
+		len++;
+	return (len);
 }
 
-char	*alloc(char *ptr, size_t size)
+void	*ft_memcpy(void *dest, const void *src, size_t num)
 {
-	char	*temp;
-	size_t	i;
+	char		*d;
+	const char	*s;
 
-	temp = (char *)malloc(size);
-	if (!temp)
-		return (NULL);
-	if (ptr)
+	if (dest == NULL && src == NULL)
+		return (dest);
+	d = (char *) dest;
+	s = (const char *) src;
+	while (num > 0)
 	{
-		i = 0;
-		while (i < size - 1 && ptr[i] != '\0')
-		{
-			temp[i] = ptr[i];
-			i++;
-		}
-		temp[i] = '\0';
-		free(ptr);
+		*d++ = *s++;
+		num--;
 	}
-	return (temp);
+	return (dest);
 }
 
 void	*ft_memmove(void *dst, const void *src, size_t n)

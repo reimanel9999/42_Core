@@ -3,30 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcarvalh <mcarvalh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manelcarvalho <manelcarvalho@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 14:23:42 by mcarvalh          #+#    #+#             */
-/*   Updated: 2024/07/15 14:54:42 by mcarvalh         ###   ########.fr       */
+/*   Created: 2025/02/20 22:04:53 by manelcarval       #+#    #+#             */
+/*   Updated: 2025/06/16 11:26:19 by manelcarval      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef MYLINE_H
+# define MYLINE_H
+
+#  define BUFFER_SIZE 1
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <fcntl.h>
 #include <stdio.h>
-#include <stdint.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
 
 char	*get_next_line(int fd);
-char	*alloc(char *ptr, size_t size);
-char	*concat_buf(char *buffer, char *line, int *len);
-char	*get_line(char *buffer, char *line, int fd, int *len);
+char	*ft_strchr(const char *str, int c);
+void	*ft_memcpy(void *dest, const void *src, size_t num);
+size_t	ft_strlen(const char *str);
 void	*ft_memmove(void *dst, const void *src, size_t n);
 
 #endif
